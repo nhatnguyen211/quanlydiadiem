@@ -1,0 +1,400 @@
+﻿@using BELibrary.Entity
+@{
+    var directors = (List<Director>)ViewBag.Directors ?? new List<Director>();
+    var locations = (List<Location>)ViewBag.Locations ?? new List<Location>();
+    var latestPosts = (List<Article>)ViewBag.LatestPosts ?? new List<Article>();
+    var Categories = (List<Category>)ViewBag.Categories ?? new List<Category>();
+    var CategoriesSelected = (List<Guid>)ViewBag.CategoriesSelected ?? new List<Guid>();
+    var LocationsSelected = (List<Guid>)ViewBag.LocationsSelected ?? new List<Guid>();
+    var LocationRecords = (List<LocationRecord>)ViewBag.LocationRecords ?? new List<LocationRecord>();
+}
+@functions {
+    public string TruncateString(string value, int maxLength)
+    {
+        if (string.IsNullOrEmpty(value)) return value;
+        return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
+    }
+}
+<div class="home-banner">
+    <div class="dot-slider slider">
+        <div class="profile-widget">
+            <div class="pro-img">
+                <a href="javascript:void(0);">
+                    <img class="img-fluid" src="~/Content/images/cover1.png" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="profile-widget">
+            <div class="pro-img">
+                <a href="javascript:void(0);">
+                    <img class="img-fluid" src="~/Content/images/cover1.png" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="profile-widget">
+            <div class="pro-img">
+                <a href="javascript:void(0);">
+                    <img class="img-fluid" src="~/Content/images/cover1.png" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="profile-widget">
+            <div class="pro-img">
+                <a href="javascript:void(0);">
+                    <img class="img-fluid" src="~/Content/images/cover1.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="banner-wrapper doc-form">
+            <div class="app-form">
+                <h2>Tìm kiếm Địa Điểm <span class="header-highlight">Bà Rịa - Vũng Tàu </span></h2>
+                <form action="/locationrecord/search" class="doctor-search-form">
+                    <div class="row">x
+                        <div class="col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <div class="form-custom">
+                                    <input type="text" class="form-control" value="" placeholder="Tìm Địa Điểm" name="query">
+                                    <i class="far fa-compass"></i>
+                                </div><br />
+                                <span> Ví dụ: Biển Long Hải, Mũi Nghinh Phong ...</span>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-4">
+                            <button type="submit" class="btn banner-btn"><i class="fas fa-search"></i> <span>Tìm Kiếm</span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Tab-->
+<section class="category-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="set-category">
+                    <div class="d-flex align-items-center">
+                        <div class="info-holder">
+                            <h3>Địa Điểm Nổi Bật</h3>
+                            <p>Bà Rịa – Vũng Tàu là trung tâm kinh tế, tài chính, văn hóa, du lịch, giao thông - vận tải và giáo dục và là một trong những trung tâm kinh tế của vùng Đông Nam Bộ.</p>
+                            <a href="/locationrecord" class="book-now">Tìm kiếm <i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <h1>01</h1>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="set-category light">
+                    <div class="d-flex align-items-center">
+                        <div class="info-holder">
+                            <h3>Tin Tức</h3>
+                            <p>Tin Tức nổi bật xung quanh thành phố, các địa điểm vui chơi giải trí, du lịch. Các bài viết về giá trị văn hóa, thể thao, du lịch trên địa bàn tỉnh Bà Rịa – Vũng Tàu.</p>
+                            <a href="/article" class="book-now">Xem thêm<i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <h1>02</h1>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="set-category lighter">
+                    <div class="d-flex align-items-center">
+                        <div class="info-holder">
+                            <h3>Sự Kiện Tháng</h3>
+                            <p>Tin Tức nổi bật xung quanh thành phố, các địa điểm vui chơi giải trí, du lịch. Các bài viết về giá trị văn hóa, thể thao, du lịch trên địa bàn tỉnh Bà Rịa – Vũng Tàu.</p>
+                            <a href="/locationrecord" class="book-now">Xem thêm <i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <h1>03</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Tab-->
+<!--Tab-->
+<section class="browse-speciality">
+    <div class="container">
+        <div class="sec-header">
+            <h2>Danh Mục Địa Điểm</h2>
+            <span class="bottom-border"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="browse-slider slider">
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/1.png" />
+                        <div class="overlay">
+                            <h3>Vịnh - Bãi Biển</h3>
+                            <p style="color:white">Du Lịch</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/2.png" />
+                        <div class="overlay">
+                            <h3>Đồi - Núi</h3>
+                            <p style="color:white">Du Lịch</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/3.png" />
+                        <div class="overlay">
+                            <h3>Chùa - Miếu</h3>
+                            <p style="color:white">Văn Hóa</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/4.png" />
+                        <div class="overlay">
+                            <h3>Nhà Thờ</h3>
+                            <p style="color:white">Văn Hóa</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/5.png" />
+                        <div class="overlay">
+                            <h3>Bãi Đá</h3>
+                            <p style="color:white">Du Lịch</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/6.png" />
+                        <div class="overlay">
+                            <h3>Khu Vui Chơi</h3>
+                            <p style="color:white">Thể Thao</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/7.png" />
+                        <div class="overlay">
+                            <h3>Khu Du Lịch</h3>
+                            <p style="color:white">Du Lịch</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/8.png" />
+                        <div class="overlay">
+                            <h3>Chợ Đêm</h3>
+                            <p style="color:white">Du Lịch</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/9.png" />
+                        <div class="overlay">
+                            <h3>Công Viên</h3>
+                            <p style="color:white">item.Type</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/10.png" />
+                        <div class="overlay">
+                            <h3>Nhà Văn Hóa</h3>
+                            <p style="color:white">Văn Hóa</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/11.png" />
+                        <div class="overlay">
+                            <h3>Khu Thể Thao</h3>
+                            <p style="color:white">Thể Thao</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                    <!---->
+                    <div class="profile-widget browse-widget">
+                        <img src="~/FileUploads/images/avatas/7.png" />
+                        <div class="overlay">
+                            <h3>Khu Di Tích</h3>
+                            <p style="color:white">Văn Hóa</p>
+                            <a href="#" class="arrows"><i class="fas fa-long-arrow-alt-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Tab-->
+<section class="section section-doctor">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="section-header ">
+                    <h2>Bà Rịa - Vũng Tàu</h2>
+                    <p>Các địa điểm Văn Hóa - Thể Thao - Du Lịch </p>
+                </div>
+                <div class="about-content">
+                    <p>Vũng Tàu bao gồm một phần lớn lãnh thổ nằm trên bán đảo cùng tên, cùng với đảo Long Sơn và đảo Gò Găng toạ lạc ở phía nam của tỉnh Bà Rịa - Vũng Tàu.</p>
+                    <p>Thành phố nằm cách Thành phố Hồ Chí Minh 95 km về phía Đông Nam theo đường bộ và 80 km theo đường chim bay, và là cửa ngõ quan trọng của vùng Đông Nam Bộ ra biển.</p>
+                    <a href="/locationrecord">Xem Thêm</a>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="doctor-slider slider">
+
+                    @foreach (var item in LocationRecords)
+                    {
+                        <div class="profile-widget" style="min-height: 600px;">
+                            <div class="doc-img">
+                                <a href="/locationrecord/detail?id=@item.Id">
+                                    <img class="img-fluid" alt="User Image" src="@item.Location.ImageProfile">
+                                </a>
+                                <a href="javascript:void(0)" class="fav-btn">
+                                    <i class="far fa-bookmark"></i>
+                                </a>
+                            </div>
+                            <div class="pro-content" style="min-height: 285px;">
+                                <h3 class="title">
+                                    <a href="/locationrecord/detail?id=@item.Id">@item.Location.FullName</a>
+                                    <i class="fas fa-check-circle verified"></i>
+                                </h3>
+                                <p class="speciality">@item.Location.HistoryOfIllnessFamily</p>
+
+                                <div class="rating">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <span class="d-inline-block average-rating"></span>
+                                </div>
+                                <ul class="available-info">
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i> @item.Location.Address
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-dashboard"></i> @item.Location.Email
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="control">
+                                <div class="row row-sm">
+                                    <div class="col-6" style="margin-left:60px;margin-top:70px">
+                                        <a href="/locationrecord/detail?id=@item.Id" class="btn view-btn">Xem Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Tab-->
+<section class="aval-features">
+    <div class="custom-contain">
+        <div class="row">
+            <div class="col-lg-5 col-md-6 feature1">
+                <div class="info-box">
+                    <h2>Tổ Chức Đa Dạng Lễ Hội - Sự Kiện</h2>
+                    <p>Thu hút khách du lịch cả trong và ngoài nước.</p>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-6 pl-0">
+                <div class="aval-slider slider">
+                    <div class="aval-widget">
+                        <div class="features-img">
+                            <img src="~/Content/images/upload/gallery/lh1.png" />
+                            <p>Lễ hội Nghinh Ông</p>
+                        </div>
+                    </div>
+                    <div class="aval-widget">
+                        <div class="features-img">
+                            <img src="~/Content/images/upload/gallery/lh2.png" />
+                            <p>Lễ hội Đình Thần Thắng Tam</p>
+                        </div>
+                    </div>
+                    <div class="aval-widget">
+                        <div class="features-img">
+                            <img src="~/Content/images/upload/gallery/lh3.png" />
+                            <p>Lễ hội Dinh Cô</p>
+                        </div>
+                    </div>
+                    <div class="aval-widget">
+                        <div class="features-img">
+                            <img src="~/Content/images/upload/gallery/lh4.png" />
+                            <p>Lễ hội Miếu Bà Ngũ Hành</p>
+                        </div>
+                    </div>
+                    <div class="aval-widget">
+                        <div class="features-img">
+                            <img src="~/Content/images/upload/gallery/lh5.png" />
+                            <p>Lễ hội Trùng Cửu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Tab-->
+<section class="blogs-section">
+    <div class="container">
+        <div class="sec-header">
+            <h2>Tin Tức Nổi Bật</h2>
+            <span class="bottom-border"></span>
+        </div>
+        <div class="row">
+            @foreach (var art in latestPosts)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="blog-wrapper">
+                        <div class="wrap-image">
+                            <a href="/article/detail?id=@art.Id">
+                                <img src="@art.Image" alt="@art.Title" style="max-height: 400px;" />
+                            </a>
+                        </div>
+                        <div class="wrap-content">
+                            <div class="d-flex">
+                                <span class="sp-title">Nổi bật</span>
+                                <div class="post-author">
+                                    <a href="#">
+                                        <img src="~/FileUploads/images/avatas/11.png" alt="Post Author">
+                                        <span>@art.ModifiedBy</span>
+                                    </a>
+                                </div>
+                                <p class="date-cart"><span>@art.CreatedDate</span></p>
+                            </div>
+                            <div class="wrap-content-body">
+                                <h3 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><a href="/article/detail?id=@art.Id">@art.Title</a></h3>
+                                <p>@TruncateString(art.Description, 50)</p>
+                                <a href="/article/detail?id=@art.Id" class="read-txt">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts
+{
+    <script src="~/Content/theme/js/slick.js"></script>
+    <script src="~/Content/theme/js/script.js"></script>
+} 

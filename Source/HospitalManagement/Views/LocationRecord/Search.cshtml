@@ -1,0 +1,136 @@
+﻿@using BELibrary.Entity
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var query = ViewBag.QueryData ?? "";
+
+    var Locations = (List<Location>)ViewBag.Locations ?? new List<Location>();
+    var LocationsSelected = (List<Guid>)ViewBag.LocationsSelected ?? new List<Guid>();
+    var Directors = (List<Director>)ViewBag.Directors ?? new List<Director>();
+    var genders = (List<bool>)ViewBag.Genders ?? new List<bool>();
+}
+@model PagedList.IPagedList<LocationRecord>
+
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-8 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Trang Chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tìm Kiếm</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title"> Tìm thấy @(ViewBag.Total ?? 0)  dữ liệu cho từ khóa : @query</h2>
+            </div>
+            <div class="col-md-4 col-12 d-md-block d-none">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-lg-4 col-xl-3 theiaStickySidebar">
+
+                <div class="card search-filter">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Tìm kiếm</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="/locationrecord/search" method="post">
+
+                            <div class="filter-widget">
+                                <div class="filter-widget">
+                                    <div class="">
+                                        <input type="text" class="form-control" placeholder="Nhập từ khóa" name="query" value="@query">
+                                    </div>
+                                </div>
+                                <h4>Trạng Thái</h4>
+                                <div>
+                                    <label class="custom_check">
+                                        <input type="checkbox" name="genders" value="true" @(genders.Any(x => x) ? "checked" : "")>
+                                        <span class="checkmark"></span> Hoạt Động
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="custom_check">
+                                        <input type="checkbox" name="genders" value="false" @(genders.Any(x => !x) ? "checked" : "")>
+                                        <span class="checkmark"></span> Bảo Trì
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="btn-search">
+                                <button type="submit" class="btn btn-block">Tìm Kiếm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-8 col-xl-9">
+
+                @foreach (var locationrecord in Model)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="doctor-widget">
+                                <div class="doc-info-left">
+                                    <div class="doctor-img">
+                                        <a href="/locationrecord/detail?id=@locationrecord.Id">
+                                            <img src="@locationrecord.Location.ImageProfile" class="img-fluid" alt="User Image">
+                                        </a>
+                                    </div>
+                                    <div class="doc-info-cont">
+                                        <h4 class="doc-name"><a href="/locationrecord/detail?id=@locationrecord.Id">@locationrecord.Location.FullName</a></h4>
+                                        <p class="doc-speciality"> @locationrecord.Location.Description</p>
+                                        <h5 class="doc-department"> @locationrecord.Location.AreaName</h5>
+                                        <div class="rating">
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star"></i>
+                                            <span class="d-inline-block average-rating"></span>
+                                        </div>
+                                        <div class="clinic-Details">
+                                            <p class="doc-location"><i class="fas fa-map-marker-alt"></i>  @locationrecord.Location.Address</p>
+                                        </div>
+                                        <div class="clinic-services">
+                                            <span>@locationrecord.Formation</span>
+                                            <span>@locationrecord.Location.FullName</span>
+                                            <span>@locationrecord.Title</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="doc-info-right">
+                                    <div class="clini-infos">
+                                        <ul>
+                                            <li><i class="far fa-thumbs-up"></i> @locationrecord.Location.AreaName</li>
+                                            <li><i class="far fa-comment"></i> @locationrecord.Location.Scale</li>
+                                            <li><i class="fas fa-map-marker-alt"></i> @locationrecord.Location.Address</li>
+                                            <li>
+                                                @if (locationrecord.Location.Status)
+                                                {
+                                                    <button type="button" class="btn btn-success" style="font-size: 12px; padding: 0.25rem 0.5rem;"><i class="fas fa-check"></i> Hoạt Động</button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" class="btn btn-danger" style="font-size: 12px; padding: 0.25rem 0.5rem;"><i class="fas fa-times"></i> Bảo Trì</button>
+                                                }
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="clinic-booking">
+                                        <a class="apt-btn" href="/locationrecord/detail?id=@locationrecord.Id">Xem Chi Tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

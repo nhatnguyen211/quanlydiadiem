@@ -1,0 +1,265 @@
+﻿@using System.Web.Mvc
+@using BELibrary.Entity
+@model Location
+@{
+    ViewBag.Title = ViewBag.Feature + " " + ViewBag.Element;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var dateOfBirth = Model != null ? Model.DateOfBirth.ToString("yyyy-MM-dd") : DateTime.Now.AddYears(-0).ToString("yyyy-MM-dd");
+    var indentificationCardDate = Model != null ? Model.IndentificationCardDate.ToString("yyyy-MM-dd") : DateTime.Now.AddYears(-0).ToString("yyyy-MM-dd");
+    var gender = (Model != null) ? Model.Gender : true;
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel">
+
+            <!--Block Styled Form -->
+            <!--===================================================-->
+            <form method="post" id="form">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @if (ViewBag.isEdit)
+                {
+                    <input type="hidden" value="true" name="isEdit" />
+                    <input type="hidden" value="@Model.Id" name="Id" />
+                }
+                else
+                {
+                    <input type="hidden" value="false" name="isEdit" />
+                }
+
+                <input type="hidden" value="false" name="isSaveAs" />
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label class="control-label">Tên Địa Điểm</label>
+                                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @maxlength = 250 } })
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Vùng</label>
+                                @Html.DropDownListFor(model => model.AreaName, new SelectList(new[] {
+                                     "Bà Rịa",
+                                     "Châu Đức",
+                                     "Côn Đảo",
+                                     "Đất Đỏ",
+                                     "Long Điền",
+                                     "Tân Thành",
+                                     "Xuyên Mộc",
+                                     "Vũng Tàu (thị xã)",
+                                     "Vũng Tàu (thành phố)"
+                                 }), "- Chọn Vùng -", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label class="control-label">Ngày Thành Lập</label>
+                                @Html.EditorFor(model => dateOfBirth, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label class="control-label">Trạng Thái</label>
+                                <select name="Gender" class="form-control" required value="@gender.ToString()">
+                                    <option>- Trạng Thái -</option>
+                                    <option value="True" @(gender ? "selected" : "")>Hoạt Động</option>
+                                    <option value="False" @(!gender ? "selected" : "")>Bảo Trì</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Email</label>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @maxlength = 250 } })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label class="control-label">Điện thoại (fax)</label>
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", @maxlength = 12 } })
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label class="control-label">Địa Chỉ</label>
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @maxlength = 250 } })
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label class="control-label">Ngày tạo</label>
+                                @Html.EditorFor(model => indentificationCardDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Tọa Độ</label>
+                                @Html.EditorFor(model => model.Job, new { htmlAttributes = new { @class = "form-control", @maxlength = 250 } })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Quy Mô</label>
+                                @Html.EditorFor(model => model.WorkPlace, new { htmlAttributes = new { @class = "form-control", @maxlength = 50 } })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Nhúng Map (frame)</label>
+                                @Html.EditorFor(model => model.Map, new { htmlAttributes = new { @class = "form-control", @maxlength = 500 } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Giới Thiệu</label>
+                                @Html.TextAreaFor(model => model.HistoryOfIllnessFamily, new { @class = "form-control", @rows = "6", @maxlength = 1000 })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Mô Tả Khác</label>
+                                @Html.TextAreaFor(model => model.HistoryOfIllnessYourself, new { @class = "form-control", @rows = "6", @maxlength = 1000 })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Mã căn cước (Ghi Chú) </label>
+                                @Html.EditorFor(model => model.IndentificationCardId, new { htmlAttributes = new { @class = "form-control", @maxlength = 12 } })
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">Ảnh hồ sơ</label>
+                                <div class="input-group mar-btm">
+                                    @Html.EditorFor(model => model.ImageProfile, new { htmlAttributes = new { @class = "form-control", @maxlength = 250 } })
+                                    <span class="input-group-btn" onclick="ChooseImgAvatar()">
+                                        <a class="btn btn-mint btn-icon"><i class="fa fa-cloud-upload icon-lg"></i></a>
+                                    </span>
+                                </div>
+                                @if (ViewBag.isEdit)
+                                {
+                                    <img class="img img-thumbnail" id="ImgAvt" style="width: 200px;float: right" src="@Model.ImageProfile" alt="" />
+                                }
+                                else
+                                {
+                                    <img class="img img-thumbnail" id="ImgAvt" src="" alt="" style="width: 200px;float: right" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <button class="btn btn-success">Lưu</button>
+                    <a class="btn btn-danger" href="/admin/location/">Hủy</a>
+                </div>
+            </form>
+            <!--===================================================-->
+            <!--End Block
+            //  AIzaSyAwX52vBAZDGg4RRiJPb6GrQVrdkhunIjw Styled Form -->
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfoPQUfKqR8A9DHPAOm8avYVf03Yq72kM&libraries=places"></script>
+    <script>
+
+        $(document).ready(function () {
+            const address = $("#Address");
+            const options = {
+                types: ['(cities)'],
+                componentRestrictions: {
+                    country: 'vn'
+                }
+            };
+            const autocomplete = new google.maps.places.Autocomplete(address.get(0), options);
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                return false;
+            });
+        });
+
+        $("#ImageProfile").change(function () {
+            const imgSrc = $("input[name=ImageProfile]").val();
+            if (imgSrc !== "") {
+                $("#ImgAvt").attr("src", imgSrc);
+            }
+        });
+        function ChooseImgAvatar() {
+            const finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $("#ImgAvt").attr("src", fileUrl);
+                $("#ImageProfile").val(fileUrl);
+            }
+            finder.popup();
+        }
+
+        const baseUrl = '/admin/location';
+        // Valid
+        const fields = {
+            FullName: {
+                container: 'tooltip',
+                validators: {
+                    notEmpty: {
+                        message: 'Họ tên là bắt buộc và không thể để trống'
+                    }
+                }
+            },
+            Address: {
+                container: 'tooltip',
+                validators: {
+                    notEmpty: {
+                        message: 'Địa chỉ là bắt buộc và không thể để trống'
+                    }
+                }
+            },
+            Gender: {
+                container: 'tooltip',
+                validators: {
+                    notEmpty: {
+                        message: 'Giới tính là bắt buộc và không thể để trống'
+                    }
+                }
+            },
+            Phone: {
+                container: 'tooltip',
+                validators: {
+                    notEmpty: {
+                        message: 'Điện thoại là bắt buộc và không thể để trống'
+                    }
+                }
+            }
+
+        }
+        validator.valid('form', fields, (e) => {
+            e.preventDefault();
+            var formData = new FormData(document.getElementById('form'));
+            ajax.createOrUpdate(`${baseUrl}/CreateOrEdit`, formData,
+                (response) => {
+                    if (response.status) {
+                        notify.push(response.mess, notify.EType.SUCCESS);
+                        notify.loading();
+                        window.location.href = `/admin/locationrecord/create?locationId=${response.data.Id}`;
+
+                    } else {
+                        notify.push(response.mess, notify.EType.DANGER);
+                        $(':input[type="submit"]').prop('disabled', false);
+                    }
+                },
+                (jqXhr, textStatus) => {
+                    const mess = `Request failed: ${textStatus}`;
+                    notify.push(mess, notify.EType.DANGER);
+                    $(':input[type="submit"]').prop('disabled', false);
+                }
+            );
+        });
+    </script>
+}

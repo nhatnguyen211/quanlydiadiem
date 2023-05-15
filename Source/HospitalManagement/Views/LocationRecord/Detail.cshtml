@@ -1,0 +1,392 @@
+﻿@using BELibrary.Entity
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var locations = (List<Location>)ViewBag.Locations ?? new List<Location>();
+    var locationrecords = (List<LocationRecord>)ViewBag.LocationRecords ?? new List<LocationRecord>();
+    var directors = (List<Director>)ViewBag.Directors ?? new List<Director>();
+    var genders = (List<bool>)ViewBag.Genders ?? new List<bool>();
+    var LocationsSelected = (List<Guid>)ViewBag.LocationsSelected ?? new List<Guid>();
+
+
+
+
+}
+@model BELibrary.Entity.LocationRecord
+
+<div class="breadcrumb-bar">
+    <div class="container-fluid">
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="doctor-widget">
+                    <div class="doc-info-left">
+                        <div class="doctor-img">
+                            <img src="@Model.ImageProfile" class="img-fluid" alt="User Image">
+                        </div>
+                        <div class="doc-info-cont" style="margin-right:5px;">
+                            <h4 class="doc-name">@Model.Location.FullName</h4>
+                            <p class="doc-speciality">@Model.Location.HistoryOfIllnessFamily</p>
+                            <p class="doc-department">@Model.Location.AreaName</p>
+                            <p class="doc-location"><i class="fas fa-map-marker-alt"></i> @Model.Location.Address</p>
+                            <div class="rating">
+                                <p class="doc-location">
+                                    @if (Model.Location.Status)
+                                    {
+                                        <button type="button" class="btn btn-success" style="font-size: 12px; padding: 0.25rem 0.5rem;"><i class="fas fa-check"></i> Hoạt Động</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-danger" style="font-size: 12px; padding: 0.25rem 0.5rem;"><i class="fas fa-times"></i> Tạm Ngưng</button>
+                                    }
+                                </p>
+                            </div>
+                            <div class="clinic-Details">
+                            </div>
+                            <div class="clinic-services">
+                                <span>Bà Rịa - Vũng Tàu</span>
+                                <span>Du Lịch</span>
+                                <span>Văn Hóa</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="doc-info-right">
+                        <div class="clini-infos">
+                            <ul>
+                                <li><i class="fas fa-comments"></i>Du Lịch BR - VT</li>
+                                <li><i class="fas fa-chart-area"></i> @Model.Location.AreaName</li>
+                                <li><i class="fas fa-map-marked-alt"></i> @Model.Location.Coordinate</li>
+                                <li><i class="fab fa-cloudscale"></i> @Model.Location.Scale</li>
+                                <li><i class="fas fa-tags"></i> @Model.Title</li>
+                                <li><i class="fas fa-user-tie"></i> Nhật Nguyễn (Quản Lý)</li>
+                                <li><i class="fas fa-thumbtack"></i> @Model.Formation</li>
+                            </ul>
+                        </div>
+                        <div class="doctor-action">
+                            <a href="javascript:void(0)" class="btn btn-white fav-btn">
+                                <i class="fas fa-heart"></i>
+                            </a>
+                            <a href="chat.html" class="btn btn-white msg-btn">
+                                <i class="fas fa-comment-dots"></i>
+                            </a>
+                            <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
+                                <i class="fab fa-facebook-messenger"></i>
+                            </a>
+                            <a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
+                                <i class="fas fa-link"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body pt-0">
+
+                <nav class="user-tabs mb-4">
+                    <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#doc_overview" data-toggle="tab">Chi Tiết</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#doc_locations" data-toggle="tab">Sự Kiện - Lễ Hội</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#doc_business_hours" data-toggle="tab">Giờ Mở Cửa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#doc_reviews" data-toggle="tab">Đường Dẫn Maps</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="tab-content pt-0">
+
+                    <div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-9">
+                                <div class="widget about-widget">
+                                    <div class="home-banner" style="margin-left:230px">
+                                        <div class="slider">
+                                            @if (!string.IsNullOrEmpty(Model.ImageProfile))
+                                            {
+                                                <div>
+                                                    <img src="@Model.ImageProfile" alt="" style="width: 600px; height: 400px;">
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.ImageProfile2))
+                                            {
+                                                <div>
+                                                    <img src="@Model.ImageProfile2" alt="" style="width: 600px; height: 400px;">
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.ImageProfile3))
+                                            {
+                                                <div>
+                                                    <img src="@Model.ImageProfile3" alt="" style="width: 600px; height: 400px;">
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="widget about-widget">
+                                    <h4 class="widget-title">Tiểu sử</h4>
+                                    <p> @Model.Location.Description</p>
+                                </div>
+
+                                <div class="widget education-widget">
+                                    <h4 class="widget-title">Quá trình hình thành</h4>
+                                    <div class="experience-box">
+                                        <ul class="experience-list">
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name">Khánh thành: @Model.ForDate</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name">Chịu trách nhiệm giai đoạn 2</a>
+                                                        <div>@Model.ForManage</div>
+                                                        <span class="time">@Model.ForDate2</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name">Chịu trách nhiệm giai đoạn 2</a>
+                                                        <div>@Model.ForManage2</div>
+                                                        <span class="time">@Model.ForDate2</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="widget experience-widget">
+                                    <h4 class="widget-title">Tổ chức quản lý</h4>
+                                    <div class="experience-box">
+                                        <ul class="experience-list">
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <a href="#/" class="name">@Model.ForManage2</a>
+                                                        <span class="time">Hiện tại</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="widget awards-widget">
+                                    <h4 class="widget-title">Các kỷ lục</h4>
+                                    <div class="experience-box">
+                                        <ul class="experience-list">
+                                            <li>
+                                                <div class="experience-user">
+                                                    <div class="before-circle"></div>
+                                                </div>
+                                                <div class="experience-content">
+                                                    <div class="timeline-content">
+                                                        <p class="exp-year">@Model.ForManage2</p>
+                                                        <h4 class="exp-title">@Model.ForManage2</h4>
+                                                        <p>@Model.ForManage2</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="service-list">
+                                    <h4>Hoạt Động</h4>
+                                    <ul class="clearfix">
+                                        <li>@Model.ForManage2</li>
+                                        <li>@Model.ForManage2</li>
+                                        <li>@Model.ForManage2</li>
+                                    </ul>
+                                </div>
+
+                                <div class="service-list">
+                                    <h4>Lễ Hội - Sự Kiện</h4>
+                                    <ul class="clearfix">
+                                        <li>@Model.ForManage2</li>
+                                        <li>@Model.ForManage2</li>
+                                        <li>@Model.ForManage2</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div role="tabpanel" id="doc_locations" class="tab-pane fade">
+                        <div class="location-list">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="clinic-content">
+                                        <h4 class="clinic-name"><a href="#">item.FullName</a></h4>
+                                        <p class="doc-speciality">MDS - Periodontology and Oral Implantology, BDS</p>
+                                        <div class="rating">
+                                            <p class="doc-speciality">Thời gian bắt đầu: 2023-03-21 10:21 PM</p>
+                                            <p class="doc-speciality">Thời gian kết thúc: 2023-03-21 10:21 PM</p>
+                                        </div>
+                                        <div class="clinic-Details mb-0">
+                                            <h5 class="clinic-direction"> <i class="fas fa-map-marker-alt"></i> 114 NDS, P7, VT<br><a href="javascript:void(0);">Xem Chi Tiết</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="clinic-timing">
+                                        <div>
+                                            <p class="timings-days">
+                                                <span> Mon - Sat </span>
+                                            </p>
+                                            <p class="timings-times">
+                                                <span>10:00 AM - 2:00 PM</span>
+                                                <span>4:00 PM - 9:00 PM</span>
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="timings-days">
+                                                <span>Sun</span>
+                                            </p>
+                                            <p class="timings-times">
+                                                <span>10:00 AM - 2:00 PM</span>
+                                            </p>
+                                        </div>
+                                        <div class="consult-price">
+                                            Giá vé vào cổng:
+                                            $250
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="consult-price">
+                                        <button type="button" class="btn btn-success"> Đang diễn ra</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="tabpanel" id="doc_reviews" class="tab-pane fade">
+                        <div class="write-review">
+                            <h4>Tọa độ địa điểm <strong>@Model.Location.FullName</strong> trên Google Maps:</h4>
+                            <iframe src="@Model.Location.Map" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+
+
+                    <div role="tabpanel" id="doc_business_hours" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3">
+
+                                <div class="widget business-widget">
+                                    <div class="widget-content">
+                                        <div class="listing-hours">
+                                            <div class="listing-day current">
+                                                <div class="day">Today <span>5 Nov 2019</span></div>
+                                                <div class="time-items">
+                                                    <span class="open-status"><span class="badge bg-success-light">Open Now</span></span>
+                                                    <span class="time">07:00 AM - 09:00 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="listing-day">
+                                                <div class="day">Monday</div>
+                                                <div class="time-items">
+                                                    <span class="time">07:00 AM - 09:00 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="listing-day">
+                                                <div class="day">Tuesday</div>
+                                                <div class="time-items">
+                                                    <span class="time">07:00 AM - 09:00 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="listing-day">
+                                                <div class="day">Wednesday</div>
+                                                <div class="time-items">
+                                                    <span class="time">07:00 AM - 09:00 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="listing-day">
+                                                <div class="day">Thursday</div>
+                                                <div class="time-items">
+                                                    <span class="time">07:00 AM - 09:00 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="listing-day">
+                                                <div class="day">Friday</div>
+                                                <div class="time-items">
+                                                    <span class="time">07:00 AM - 09:00 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="listing-day">
+                                                <div class="day">Saturday</div>
+                                                <div class="time-items">
+                                                    <span class="time">07:00 AM - 09:00 PM</span>
+                                                </div>
+                                            </div>
+                                            <div class="listing-day closed">
+                                                <div class="day">Sunday</div>
+                                                <div class="time-items">
+                                                    <span class="time"><span class="badge bg-danger-light">Closed</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.slider').slick({
+                dots: true, // Hiển thị chấm tròn điều hướng
+                autoplay: true, // Tự động chuyển đổi hình ảnh
+                autoplaySpeed: 2000 // Thời gian hiển thị giữa các hình ảnh
+            });
+        });
+    </script>
+} 
